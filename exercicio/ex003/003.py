@@ -43,7 +43,7 @@ def iniciar():
                 print("Insira seu nome")
                 nome = input("")
                 id = random.randint(100,300)
-                ContaBancaria = id , nome
+                new_accont = ContaBancaria = id , nome
 
             
 
