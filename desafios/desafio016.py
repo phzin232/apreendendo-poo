@@ -1,6 +1,7 @@
 from rich import print
 from rich.table import Table
 from rich.traceback import install
+from rich.panel import Panel
 
 install()
 
@@ -25,7 +26,6 @@ def testepqsoburro():
 
     while(quantity>0):
         quantity -=1
-   
         print("[bold]Escreva o nome do funcionario completo[/] ")
         nome = input(" ")
 
@@ -34,15 +34,14 @@ def testepqsoburro():
 
         print("Cargo")
         cargo = input("")
-
         f = Funcionario(nome=" ",setor=" ",cargo=" ")     
-
+        
         table.add_row(nome,setor,cargo)
 
         Funcionario.lista_funcionario.append(f)
-        
+        """cria linhas para os funfunarios"""
     if(quantity<=0):
-        print(table)
+        print(Panel(table, title="Sistema RH"))
 
 
     
