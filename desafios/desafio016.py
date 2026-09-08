@@ -25,7 +25,7 @@ def testepqsoburro():
 
 
     while(quantity>0):
-        quantity -=1
+        quantity -= 1
         print("[bold]Escreva o nome do funcionario completo[/] ")
         nome = input(" ")
 
