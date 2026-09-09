@@ -34,14 +34,13 @@ def testepqsoburro():
 
         print("Cargo")
         cargo = input("")
-        f = Funcionario(nome=" ",setor=" ",cargo=" ")     
-        
+        f = Funcionario(nome,setor,cargo)       
         table.add_row(nome,setor,cargo)
 
         Funcionario.lista_funcionario.append(f)
         """cria linhas para os funfunarios"""
     if(quantity<=0):
-        print(Panel(table, title="Sistema RH"))
+        print(Panel(table, title="Sistema RH",expand=False))
 
 
     
