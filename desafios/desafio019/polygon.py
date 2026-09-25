@@ -1,13 +1,9 @@
 from abc import ABC, abstractmethod
 
 class Polygon(ABC):
-    def __init__(self, qtd_lados):
-        self.qtd_lados = qtd_lados
-
-
 
     @abstractmethod
-    def perimitry(self):
+    def perimitry():
         pass
     
     @abstractmethod
