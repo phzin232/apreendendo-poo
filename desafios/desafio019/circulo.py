@@ -7,8 +7,7 @@ class Circulo(Polygon):
 
 
 
-    def perimitry(self):
-        
+    def perimitry(self):  
        return 2* pi * self.tam_raio
 
     def area(self):
