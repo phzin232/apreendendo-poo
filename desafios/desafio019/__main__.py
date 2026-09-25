@@ -7,8 +7,8 @@ from circulo import Circulo
 install()
 
 status = "start"
-
-
+circulo_criado = False
+quadrado_criado = False
 
 if(status >= "start"):
     status ="ask"
@@ -26,20 +26,23 @@ if(status == "quadrado" ):
     tam_lado = input()
     tam_lado = float(tam_lado)
 
-    q1 = quadrado(tam_lado)
+    q1 = Quadrado(tam_lado)
+    quadrado_criado = True
     print(f"Perímetro do quadrado: {q1.perimitry()} cm")
 
     print(f"Área do quadrado: [blue]{q1.area()}[/] cm²")
 
+if(status == "circulo"):
+    criar_circulo()
 
-if(status =="circulo"):
-   print(f"Qual o tamanho do raio?")
-   tam__raio = input()
-   tam__raio = float(tam__raio)
-
-   c1 = Circulo(tam__raio)
 
    print(f"A área é: {c1.area():.2f}")
 
    print(f"O perimetro é:{c1.perimitry():.2f}")
 
+def criar_circulo(self):
+    print(f"Qual o tamanho do raio?")
+    tam__raio = input()
+    tam__raio = float(tam__raio)
+    self.circulo_criado = True
+    c1 = Circulo(tam__raio)

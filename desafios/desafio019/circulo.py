@@ -13,3 +13,7 @@ class Circulo(Polygon):
 
     def area(self):
        return self.tam_raio **2 * pi
+   
+    def diametro(self):
+      return self.tam_raio * 2
+     

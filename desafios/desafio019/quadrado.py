@@ -8,11 +8,12 @@ class Quadrado(Polygon):
    
    def perimitry(self):
       
-        perimitro = self.tam_lado * self.qtd_lado
-        return perimitro
+    return self.tam_lado * self.qtd_lado
+        
    
    def area(self):
-    area = self.tam_lado **2
-    return area
+    return self.tam_lado ** 2
+    
+  
       
 
