@@ -18,7 +18,6 @@ class BahTcheChurras():
     def detalhamento(self):
 
 
-
         conteudo = (
             f"[bold yellow]Quantidade de pessoas[/] {self.pessoas}\n"
             f"[bold red]Valor necessario[/] R$ {self.valor}\n"

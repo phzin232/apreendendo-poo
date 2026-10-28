@@ -3,12 +3,15 @@ from characters.player import pStatus
 from rich import print
 from rich import inspect
 from rich.traceback import install
-from random import randint
+from random import randint, choices,choice
+from rich.panel import Panel
+
 install()
 player = []
 npc = []
 def end():
     print(f"[red]Game Over")
+
 
 
 def validar(pergunta, lista):
@@ -19,6 +22,18 @@ def validar(pergunta, lista):
 
     return text_a_validar
 
+def detail(personagem):
+    conteudo = (
+        f"[bold blue]Nome:[/]{personagem.name}\n" 
+        f"[bold red]HP: [/]{personagem.hp}\n"
+        f"[bold cyan]Estamina:[/]{personagem.stamina}\n"
+     )
+
+    return Panel(conteudo,
+                 expand=False,
+                 title=f"{personagem.name}",
+                 border_style="red"
+                 )
 
 def start():
     listvalidar = ["npc","player"]
@@ -31,6 +46,9 @@ def start():
         stamina = randint(10,120)
         playerst = pStatus(hp,stamina, name)
         player.append(playerst)
+        print(detail(playerst))
 
-        inspect(playerst)
+    elif ask == "NPC":
+        pass
+
 start()
