@@ -1,4 +1,4 @@
-from characters.npc import nStatus, gerar_monstro
+from characters.npc import nStatus, gerar_monstro, npc_ataque
 from characters.player import pStatus, gerar_player
 from rich import print,inspect
 from rich.traceback import install
@@ -10,8 +10,8 @@ import time
 install()
 player = []
 npc = []
-game_started = False
-status = "waiting"
+
+
 
 
 def validar(pergunta, lista):
@@ -36,6 +36,8 @@ def detail(personagem):
                  )
 
 def start():
+    game_started = False
+    status = "waiting"
     listvalidar = ["player","npc"]
     ask = validar("Gostaria de criar um Player ou NPC? escreva sua solicitação por favor\n",listvalidar )
     
@@ -44,10 +46,9 @@ def start():
         playerst = gerar_player()
         player.append(playerst)
         print(detail(playerst))
-        global game_started
         game_started = True
         time.sleep(2)
-        gerar_horda()
+        gerar_horda(status, game_started)
 
 
     elif ask == "npc":
@@ -65,14 +66,15 @@ def novo_jogo():
     if ask == "sim":
         start()
 
-def end():
-    print(f"[red]Game Over")
-    time.sleep(3)
-    novo_jogo()
+def end(status):
+   if status == "game_over":
+        print(f"[red]Game Over")
+        time.sleep(3)
+        novo_jogo()
 
-def gerar_horda():
+def gerar_horda(status,game_started):
     if game_started == True:
-        global status
+       
         status = "preparing"
         global quantia_montro 
         quantia_montro = randint(1,7)
@@ -82,11 +84,12 @@ def gerar_horda():
             quantia_montro -= 1    
        
         quantia_montro = len(npc)
-        ordem()
+        ordem(status)
+    else:
+        print("Valide o codigo primeiro. Erro fatal.")
 
-def ordem():
+def ordem(status):
     ordemataque = []
-    global status
     if status == "preparing":
         if quantia_montro >=1:
                 shuffle(npc)
@@ -95,9 +98,9 @@ def ordem():
         shuffle(ordemataque)
 
         status = "ready"
-        numerar_inimigos(ordemataque)
+        numerar_inimigos(status, ordemataque)
 
-def numerar_inimigos(ordemataque):
+def numerar_inimigos(status, ordemataque):
     contador = 0
     inimigos = []
     if status == "ready":
@@ -113,12 +116,26 @@ def numerar_inimigos(ordemataque):
                 print(f"{contador} - {cabacice.name}(HP:{cabacice.hp})")
                 contador += 1
                 inimigos.append(cabacice)
-        atacar(inimigos)
+        atacar(status, inimigos, ordemataque)
         
-def atacar(inimigos):
+def atacar(status, inimigos, ordemdeataque):
     if status == "ready":
+        turno = ordemdeataque[0]
+        if status == "ready":
+            dano = int
+            status = "combate"
+            if isinstance(turno, nStatus):
+                dano = npc_ataque(turno,player[0])
+                print(f"O monstro {turno[0].name} ira te atacar com: {dano} de dano \n"
+                      "Agora você tem\n")
+                player[0].hp -= dano
+                print(detail(player[0]))
+                
+                        
+
+
+
         
-        pass
 
 
 start()
