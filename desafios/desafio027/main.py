@@ -1,5 +1,5 @@
 from characters.npc import nStatus, gerar_monstro, npc_ataque
-from characters.player import pStatus, gerar_player
+from characters.player import pStatus, gerar_player,ataque_player
 from rich import print,inspect
 from rich.traceback import install
 from random import randint, choices,choice, shuffle
@@ -61,7 +61,7 @@ def novo_jogo():
     listvalidar = ["sim", "não"]
     ask = validar(f"Gostaria de começar um novo jogo? Sim ou não?\n",listvalidar)
     if ask == "não":
-        print(f"[purple] obrigado por jogar!")
+        print(f"[purple] obrigado por jogar!\n")
         quit()
     if ask == "sim":
         start()
@@ -109,7 +109,7 @@ def numerar_inimigos(status, ordemataque):
                 print(f"{contador} - {cabacice.name}(HP:{cabacice.hp})")
                 contador += 1
         time.sleep(2)
-        print(f"Já a de inimigos sem você é:")
+        print(f"\nJá a de inimigos sem você é:")
         contador = 0
         for cabacice in ordemataque:
             if isinstance(cabacice, nStatus):
@@ -119,18 +119,79 @@ def numerar_inimigos(status, ordemataque):
         atacar(status, inimigos, ordemataque)
         
 def atacar(status, inimigos, ordemdeataque):
-    if status == "ready":
+    if status == "ready" or status == "combate":
         turno = ordemdeataque[0]
-        if status == "ready":
-            dano = int
-            status = "combate"
-            if isinstance(turno, nStatus):
+        dano = 0
+        status = "combate"
+
+        if len(inimigos) > 0 and isinstance(turno, nStatus):
                 dano = npc_ataque(turno,player[0])
-                print(f"O monstro {turno[0].name} ira te atacar com: {dano} de dano \n"
+
+                if player[0].hp > 0:
+                    print(f"\nO monstro {turno.name} ira te atacar com: {dano} de dano \n"
                       "Agora você tem\n")
-                player[0].hp -= dano
-                print(detail(player[0]))
-                
+                    
+                    player[0].hp -= dano
+                    time.sleep(1)
+                    print(detail(player[0]))
+                    ordemdeataque.append(ordemdeataque.pop(0))
+                    time.sleep(1)
+
+                elif player[0].hp <= 0:
+                    
+                    status = "game over"
+                    end(status)
+                    return
+
+
+                contador = 0
+                for cabacice in ordemdeataque:
+                    print(f"{contador} - {cabacice.name}(HP:{cabacice.hp})\n")
+                    contador += 1
+         
+
+        elif len(inimigos) > 0 and isinstance(turno, pStatus):
+
+            print(f"\nLista de quem atacar!\n")
+            contador = 1
+            for cabacice in inimigos:
+                if isinstance (cabacice,nStatus):
+                    print(f"{contador} - {cabacice.name}(HP:{cabacice.hp})\n")
+                    contador += 1
+            time.sleep(1)
+            ask = int(input(f"Escolha quem atacar! digite o numero correspondente.\n"))
+            ask -= 1
+
+            alvo = inimigos[ask]
+            dano = ataque_player(player[0],alvo)
+            alvo.hp -= dano
+            validar(, alvo)
+
+            if alvo.hp > 0:
+
+                print(f"O {alvo.name} sofreu {dano} de dano!\n"
+                    f"vida do {alvo.name} está {alvo.hp}\n")
+                time.sleep(2)
+                ordemdeataque.append(ordemdeataque.pop(0))
+
+            elif alvo.hp <= 0:
+             print(f"O {alvo.name} morreu!\n")
+             ordemdeataque.remove(alvo)
+             inimigos.remove(alvo)
+
+
+
+        
+        if len(inimigos) > 0:
+
+            atacar(status,inimigos,ordemdeataque)
+
+        elif len(inimigos) == 0:
+            print("FIM DE JOGO GANHOU")
+            
+            
+
+
                         
 
 

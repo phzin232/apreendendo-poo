@@ -8,7 +8,6 @@ class nStatus():
         self.tipo_npc = tipo_npc
         self.dano = dano
 
-
 def gerar_monstro():
     hp = randint(10,50)
     dano = randint(1,4)
