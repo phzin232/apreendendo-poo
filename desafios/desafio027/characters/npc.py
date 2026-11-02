@@ -1,17 +1,32 @@
 from random import randint, choices,choice
+from rich import print
 
 class nStatus():
     def __init__(self, hp = 0, stamina = 0, name = "", tipo_npc = "", dano = 0): 
         self.hp = hp
+        self.hpmax = hp
         self.stamina = stamina
+        self.staminamax = stamina
         self.name = name
         self.tipo_npc = tipo_npc
         self.dano = dano
 
+class Monstro(nStatus):
+    def __init__(self, hp = 0, stamina = 0, name = "", tipo_npc = "", dano = 0):
+        super().__init__(hp, stamina, name, tipo_npc, dano)
+        self.hotil = True
+
+class NPCamigavel(nStatus):
+    def __init__(self, hp = 0, stamina = 0, name = "", tipo_npc = "", dano = 0):
+        super().__init__(hp, stamina, name, tipo_npc, dano)
+        self.hotil = False
+        self.dialogo = True
+
 def gerar_monstro():
     hp = randint(10,50)
-    dano = randint(1,4)
+    dano = randint(3,10)
     stamina = randint(10,120)
+
     tipo_npc = choices(["Goblin", "Orc", "Wolf", "Demon", "Fallen Angel"], weights=[40, 20, 30,9,1],k=1)[0]
     name = f"{tipo_npc} {choice(["Avançado", "Novo", "Batedor"])}"
     if tipo_npc == "Goblin":
@@ -33,6 +48,7 @@ def gerar_monstro():
     if tipo_npc == "Fallen Angel":
         hp *= 130
         stamina *= 1160
+        dano = randint(10,15)
         dano *=5
     return nStatus( int(hp), int(stamina), name, tipo_npc, int(dano))
 
@@ -67,5 +83,8 @@ def npc_ataque(self, alvo):
         if tipo_dano == "critico":
             dano = int(dano * 6)
 
-    alvo.hp -= dano
+    if tipo_dano == "critico":
+        print(f"[red]CRITICO!\n")
+
+
     return dano 
