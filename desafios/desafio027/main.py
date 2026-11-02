@@ -126,10 +126,10 @@ def atacar(status, inimigos, ordemdeataque):
 
             custa_esquiva = 15
             if player[0].stamina >= custa_esquiva:
-                lista_esquiva_valida = ["sim","nao","não","esquivar","esquiva","s","e","n"]
+                lista_esquiva_valida = ["sim","nao","não","esquivar","esquiva","s","e","n","d","desviar"]
                 ask_esquiva = validar(f"\nO {turno.name} irá te atacar! gostaria de [blue]desviar?[/]", lista_esquiva_valida )
 
-                if ask_esquiva.startswith(("s","e")) :
+                if ask_esquiva.startswith(("s","e","d")) :
                     if player[0].stamina < custa_esquiva:
                         print(f"\nestamina necessaria: {custa_esquiva} estamina disponivel: {player[0].stamina}")
                     

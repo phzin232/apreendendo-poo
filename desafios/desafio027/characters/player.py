@@ -42,6 +42,5 @@ def cura(self):
         
 
 
-stoop
 
 
